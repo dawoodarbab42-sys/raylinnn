@@ -1,0 +1,2041 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raylin - Your AI Voice Agent Solution</title>
+    
+    <!-- SEO & Meta Tags --><meta name="description" content="Raylin.ai delivers a custom AI voice agent to save time, cut costs, and scale your business. Book a free AI strategy call today.">
+    <link rel="canonical" href="https://raylin.ai"> 
+<!-- Open Graph --><meta property="og:title" content="Raylin.ai - Custom AI Voice Agent">
+    <meta property="og:description" content="Transform your operations with an AI Voice Agent that saves time, cut costs, and boosts sales.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://raylin.ai">
+    <!-- <meta property="og:image" content="https://raylin.ai/og-image.jpg"> --><!-- Twitter --><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Raylin.ai - Custom AI Voice Agent">
+    <meta name="twitter:description" content="Transform your operations with an AI Voice Agent that saves time, cut costs, and boosts sales.">
+    <!-- <meta name="twitter:image" content="https://raylin.ai/twitter-image.jpg"> --><!-- Favicons --><link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#0A0F1C">
+
+    <!-- Schema.org --><script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Raylin.ai",
+      "url": "https://raylin.ai",
+      "logo": "https://raylin.ai/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "team@raylinai.com",
+        "contactType": "Customer Service"
+      },
+      "sameAs": []
+    }
+    </script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@300;600;800&display=swap" rel="stylesheet" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <style>
+        :root{
+            --bg:#0A0F1C;
+            --panel:#0b0b0b; 
+            --mint:#00C2FF; /* Secondary Color */
+            --mint-80: rgba(0, 194, 255, .80);
+            --mint-70: rgba(0, 194, 255, .70);
+            --mint-60: rgba(0, 194, 255, .60);
+            --mint-40: rgba(0, 194, 255, .40);
+            --mint-30: rgba(0, 194, 255, .30);
+            --mint-20: rgba(0, 194, 255, .20);
+            --accent: #00FF99; /* Accent Color (Only used for Answer button) */
+            --text-main: #F2F2F2;
+            --text-subtle: #a0aec0; 
+            --radius: 18px;
+        }
+
+        html {
+            background-color: var(--bg); /* Updated Color */
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main); /* Updated Color */
+            background: linear-gradient(135deg, #090e1a 0%, #0d1222 100%); /* NEW: Two-tone background gradient */
+            overflow-x: hidden;
+            position: relative; /* For grid pattern */
+        }
+        
+        /* New Background Grid */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(to right, rgba(0, 194, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 194, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -2;
+            pointer-events: none;
+        }
+        
+        /* Global Focus State */
+        :focus-visible {
+            outline: 2px solid var(--mint-60);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+        
+        /* Updated Static Glow Blob */
+        #glow-blob {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            max-width: 1200px;
+            height: 600px;
+            background: radial-gradient(circle at 50% 0%, var(--mint-20) 0%, transparent 60%);
+            filter: blur(100px);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .dynamic-text {
+            transition: opacity 0.3s ease-in-out; /* Quicker transition */
+            color: var(--mint); /* CHANGED: Was accent, now mint (blue) */
+        }
+        
+        #mission-dynamic-text-1, #mission-dynamic-text-2 {
+             color: var(--mint); /* CHANGED: Was accent, now mint (blue) */
+        }
+
+        /* Preloader Styles */
+        #preloader {
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out; /* Faster fade */
+            position: fixed;
+            inset: 0;
+            background-color: var(--bg); /* Match body background */
+            /* Removed backdrop-filter */
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Fade-in Animation Styles */
+        .fade-in-element {
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 0.8s ease-out;
+            transform: translateY(20px);
+        }
+        .fade-in-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* NEW Button Styles */
+        .glow-button {
+            display: inline-block;
+            background-color: transparent; /* Updated from #1a1a1a */
+            color: var(--mint);
+            font-weight: bold;
+            padding: 0.75rem 2rem;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            border: 1px solid var(--mint-40);
+            box-shadow: 0 0 10px var(--mint-30), 0 0 20px var(--mint-20);
+            transition: all 0.3s ease;
+        }
+        
+        .glow-button:hover {
+            background-color: var(--mint);
+            color: var(--bg); /* Updated Color */
+            box-shadow: 0 0 15px var(--mint-40), 0 0 30px var(--mint-30);
+        }
+
+        .glow-button-small {
+            padding: 0.5rem 1.25rem;
+            font-size: 0.875rem;
+            border-radius: 10px;
+        }
+
+
+        /* Logo Styles */
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none; /* Ensure links don't have underlines */
+        }
+        /* Hide old logo components */
+        .dots, .logo-text { display: none; } 
+
+        /* NEW Logo Style */
+        .logo-text-new {
+            font-family: 'Inter', sans-serif; 
+            font-weight: 700; /* Bold */
+            color: #FFFFFF; /* White text */
+            padding-right: 0; /* REMOVED padding-right */
+            border-right: none; /* REMOVED border-right */
+            height: auto; /* Adjust height based on font size */
+            line-height: 1; /* Adjust line-height for centering */
+            display: inline-block; /* Keep it inline */
+            text-transform: lowercase; /* Ensure lowercase */
+        }
+
+        /* Header-specific Logo Styles */
+        .logo-header .logo-text-new { 
+            font-size: 1.5rem; /* Bigger logo in header */
+        }
+
+        /* Preloader-specific Logo Styles */
+        #preloader-logo .logo-text-new { 
+            font-size: 3rem; /* Larger for preloader - Made bigger */
+            text-shadow: 0 0 15px var(--text-main); /* Add subtle glow */
+        }
+        
+        /* Ensure logo is visible in preloader */
+        #preloader-logo { opacity: 1; transform: scale(1); }
+        #preloader-logo .logo-text-new { opacity: 1; transform: scale(1); } /* Ensure new logo is visible */
+        
+        #preloader-logo-container { /* Kept for centering */
+             display: flex; justify-content: center; align-items: center; 
+        }
+        
+
+
+        /* Style for the money counter */
+        #money-counter {
+            color: #FF4136; /* A bright, modern red */
+            text-shadow: 0 0 10px #FF4136;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* --- Animation Styles --- */
+        .animation-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            min-height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+       
+        #step1-animation .spinner {
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+            animation: spin 4s linear infinite;
+            transform-origin: 50% 50%;
+            transform: rotate(-90deg);
+        }
+        @keyframes spin {
+            from { stroke-dashoffset: 566; }
+            to { stroke-dashoffset: 0; }
+        }
+        .code-box {
+            height: 120px;
+            width: 100%;
+            overflow: hidden;
+            font-family: monospace;
+            font-size: 0.75rem;
+        }
+        .code-scroll {
+            animation: scroll-code 10s linear infinite;
+        }
+        @keyframes scroll-code {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+        #step3-animation .stack-logo {
+            position: absolute;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #step3-animation .line-glow {
+            animation: line-flow 3s linear infinite;
+        }
+        @keyframes line-flow {
+            from { stroke-dashoffset: 100; }
+            to { stroke-dashoffset: 0; }
+        }
+        .step4-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #2a2a2a;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .step4-item .circle-arrow {
+            animation: nudge 2s ease-in-out infinite;
+        }
+        @keyframes nudge {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(3px); }
+        }
+        
+        /* Expandable Content: Readable by default, collapsed by JS */
+        .expand-content {
+            transition: max-height 0.7s ease-in-out, opacity 0.5s ease-in-out, margin-top 0.7s ease-in-out;
+            opacity: 1;
+            margin-top: 1rem;
+            max-height: 1000px; /* Visible by default */
+            line-height: 1.6; /* Improved readability */
+        }
+        .js-collapsible .expand-content {
+            max-height: 0;
+            opacity: 0;
+            margin-top: 0;
+        }
+        
+        .transparent-box {
+            background-color: rgba(0,0,0,0.2);
+        }
+        
+        /* Sound wave animation */
+        .sound-bar {
+            display: block;
+            width: 3px;
+            height: 100%;
+            background-color: var(--mint);
+            border-radius: 99px;
+            animation: sound 1.5s infinite ease-in-out;
+        }
+        @keyframes sound {
+          0%, 100% { transform: scaleY(0.2); }
+          50% { transform: scaleY(1); }
+        }
+
+        /* FAQ Styles */
+        .faq-item {
+            background-color: rgba(0,0,0,0.2);
+            border: 1px solid var(--mint-20);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            font-weight: 600;
+            color: var(--mint);
+            cursor: pointer;
+            outline: none;
+            width: 100%;
+        }
+        .faq-arrow {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: var(--mint);
+            transition: transform 0.3s ease;
+            transform-origin: center;
+        }
+        /* Readable by default, hidden by JS */
+        .faq-answer {
+            color: var(--mint-80);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            max-height: 200px; /* Visible by default */
+            opacity: 1;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            transition: max-height 0.5s ease-out, opacity 0.3s ease-out, padding 0.5s ease-out;
+        }
+        .js-collapsible .faq-answer {
+            max-height: 0;
+            opacity: 0;
+            padding: 0 1.5rem;
+        }
+        .js-collapsible .faq-item:not(.open) .faq-answer {
+             max-height: 0;
+             opacity: 0;
+             padding: 0 1.5rem;
+        }
+        .faq-item.open .faq-arrow {
+            transform: rotate(180deg);
+        }
+        .faq-item.open .faq-answer {
+            max-height: 200px; /* Adjust as needed */
+            opacity: 1;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(10, 15, 28, 0.95); /* Updated Color */
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        /* New Call Example Styles */
+        .call-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .call-card {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 30rem; /* WIDER -> SMALLER */
+            min-height: 65px; /* Set min-height for equal size -> SMALLER */
+            background-color: #2a2a2a;
+            padding: 0.65rem 1.75rem; /* THINNER vertically, WIDER horizontally -> SMALLER */
+            border-radius: 9999px; /* pill shape */
+            box-shadow: 0 0 20px var(--mint-40);
+        }
+        .call-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .status {
+            font-weight: 600;
+            font-size: 0.875rem; /* 14px */
+            color: var(--text-main);
+        }
+        .caller {
+            font-size: 0.75rem; /* 12px */
+            color: var(--text-subtle);
+        }
+        .highlight {
+            color: var(--mint);
+        }
+        .actions {
+            display: flex;
+            gap: 1rem; /* Increased gap */
+            margin-left: auto; /* Pushes buttons to the right */
+        }
+        .btn {
+            width: 2.25rem; /* 40px -> 36px - Made larger -> SMALLER */
+            height: 2.25rem; /* 40px -> 36px - Made larger -> SMALLER */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+        .hangup {
+            background-color: #EF4444; /* red-500 */
+        }
+        .answer {
+            background-color: var(--accent); /* Accent Color */
+            color: var(--bg); /* dark bg for contrast */
+        }
+        .btn svg {
+            width: 1.125rem; /* 20px -> 18px */
+            height: 1.125rem; /* 20px -> 18px */
+            color: var(--bg); /* NEW: Set icon color to body bg for contrast */
+        }
+        .hangup svg {
+            color: #FFF; /* Keep hangup icon white for contrast */
+        }
+        .divider {
+            height: 1.5rem; /* 32px -> 24px */
+            width: 1px;
+            background-color: var(--mint-40);
+        }
+        .signal {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 1.25rem; /* 20px */
+            margin-left: auto; /* Pushes signal to the right */
+        }
+        .bar {
+            /* Re-using .sound-bar styles from existing CSS */
+            display: block;
+            width: 3px;
+            height: 100%;
+            background-color: var(--mint);
+            border-radius: 99px;
+            animation: sound 1.5s infinite ease-in-out;
+        }
+        .bar:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .bar:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        /* Reduced Motion & Mobile Optimizations */
+        @media (prefers-reduced-motion: reduce) {
+            .animated-border::before,
+            #step1-animation .spinner,
+            .code-scroll,
+            #step3-animation .line-glow,
+            .step4-item .circle-arrow,
+            .sound-bar,
+            .dynamic-text,
+            .bar {
+                animation: none;
+                transition: none;
+            }
+            .dynamic-text {
+                opacity: 1 !important;
+            }
+            #glow-blob {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            #glow-blob {
+                width: 400px;
+                height: 400px;
+                filter: blur(80px);
+            }
+            /* Slow hero text rotation on mobile */
+            .dynamic-text {
+                animation-duration: 4s;
+            }
+            .call-card {
+                max-width: 100%;
+                padding: 0.75rem 1.25rem;
+                min-height: 70px;
+            }
+            .btn {
+                width: 2.25rem;
+                height: 2.25rem;
+            }
+            .btn svg {
+                width: 1.25rem;
+                height: 1.25rem;
+            }
+            /* Adjust header logo size slightly for mobile */
+            .logo-header .logo-text-new {
+                font-size: 1.375rem; /* Slightly smaller than desktop */
+            }
+            #mobile-menu .logo-text-new {
+                font-size: 1.375rem; /* Match header */
+            }
+            /* Smaller preloader logo on mobile */
+            #preloader-logo .logo-text-new {
+                font-size: 2.25rem; /* Adjusted for mobile */ 
+            }
+             /* Adjust header horizontal padding on mobile */
+            header nav {
+                max-width: 95%; /* Allow header to be wider on small screens */
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+
+        /* --- New CTA Button Style (for Call Example) --- */
+        .cta-button-green {
+            display: inline-block;
+            background-color: var(--accent); /* Uses the accent green */
+            color: var(--bg); /* Dark text for contrast */
+            font-weight: bold;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px; /* pill shape */
+            font-size: 1.125rem;
+            border: none;
+            box-shadow: 0 0 20px rgba(0, 255, 153, 0.4); /* Green glow */
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .cta-button-green:hover {
+            transform: scale(1.05); /* Add a slight grow effect on hover */
+        }
+        
+        /* NEW: Dashboard Chart Styles */
+        .chart-bar-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            height: 120px; /* 150px height for the chart area */
+            width: 100%;
+        }
+        .chart-bar-weekly {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 120px;
+            padding: 0 10px;
+            width: 100%;
+        }
+        .bar-stack {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            width: 10px; /* Thinner bars */
+            border-radius: 2px 2px 0 0;
+            overflow: hidden;
+        }
+        .bar-segment {
+            width: 100%;
+            transition: height 0.3s ease;
+            background-color: var(--mint); /* Default color */
+        }
+        .bar-segment-booked {
+            background-color: var(--mint-70);
+        }
+        .bar-segment-rescheduled {
+            background-color: #4A5568; /* Gray */
+        }
+        .bar-segment-voice {
+            background-color: var(--mint-70);
+        }
+        .bar-segment-sms {
+            background-color: var(--mint-40);
+        }
+        .bar-segment-email {
+            background-color: #4A5568; /* Gray */
+        }
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            padding: 0 10px;
+            margin-top: 4px;
+            font-size: 0.625rem; /* 10px */
+            color: var(--text-subtle);
+        }
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem; /* 12px */
+            margin-top: 1rem; /* 16px */
+            font-size: 0.75rem; /* 12px */
+            color: var(--text-subtle);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem; /* 4px */
+        }
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .dashboard-table {
+            width: 100%;
+            font-size: 0.875rem; /* 14px */
+            border-collapse: collapse;
+        }
+        .dashboard-table th, .dashboard-table td {
+            padding: 0.75rem 1rem; /* 12px 16px */
+            text-align: left;
+        }
+        .dashboard-table th {
+            color: var(--text-subtle);
+            font-weight: 500;
+        }
+        .dashboard-table tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .dashboard-table tbody tr:last-child {
+            border-bottom: none;
+        }
+        .status-pill {
+            display: inline-block;
+            padding: 0.25rem 0.75rem; /* 4px 12px */
+            border-radius: 9999px;
+            font-size: 0.75rem; /* 12px */
+            font-weight: 500;
+        }
+        .status-confirmed {
+            color: #34D399; /* Emerald 400 */
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+        .status-resolved {
+            color: #60A5FA; /* Blue 400 */
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        .status-assigned {
+            color: #F472B6; /* Pink 400 */
+            background-color: rgba(236, 72, 153, 0.1);
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
+
+    <div id="glow-blob"></div>
+
+    <!-- Preloader --><div id="preloader">
+        <div id="preloader-logo-container">
+             <!-- NEW LOGO STRUCTURE --><div id="preloader-logo" class="logo">
+                <div class="logo-text-new">
+                    <span>raylin</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu --><div id="mobile-menu" class="md:hidden" role="dialog" aria-modal="true">
+        <div class="flex justify-between items-center mb-8">
+            <!-- Mobile Logo --><a href="" class="logo logo-header"> <!-- Applied logo classes here --><!-- NEW LOGO STRUCTURE --><div class="logo-text-new">
+                    <span>raylin</span>
+                </div>
+            </a>
+            <!-- Close Button --><button id="mobile-menu-close-btn" class="text-white" aria-label="Close menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Nav Links --><nav class="flex flex-col space-y-4">
+            <a href="#ai-agents-automations" class="text-white hover:text-[var(--mint)] transition-colors text-lg mobile-nav-link">AI Voice Agent</a>
+            <a href="#our-process-section" class="text-white hover:text-[var(--mint)] transition-colors text-lg mobile-nav-link">Our Process</a>
+            <a href="#faq-section" class="text-white hover:text-[var(--mint)] transition-colors text-lg mobile-nav-link">FAQ</a>
+            <a href="#footer-section" class="text-white hover:text-[var(--mint)] transition-colors text-lg mobile-nav-link">Contact</a>
+            <a href="#book-a-call-section" class="text-lg text-[var(--mint)] font-bold pt-4 mobile-nav-link">
+                Get In Touch
+            </a>
+        </nav>
+    </div>
+
+    <div id="main-content">
+        <!-- Header --><header id="page-header" class="sticky top-4 z-50 px-4 sm:px-6 lg:px-8">
+            <!-- Adjusted max-width and padding --><nav class="max-w-2xl mx-auto flex items-center justify-center relative border border-gray-800 bg-black bg-opacity-20 backdrop-blur-sm rounded-full px-6 py-2"> 
+                <!-- Header Logo --><div id="header-logo-placeholder" class="pl-3"> 
+                    <a href="" aria-label="Raylin.ai Homepage" class="logo logo-header" style="opacity: 0;"> <!-- Start hidden --><!-- NEW LOGO STRUCTURE --><div class="logo-text-new">
+                           <span>raylin</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- NEW: Vertical Divider --><div class="hidden md:block h-5 w-px bg-[var(--mint-40)] ml-4" aria-hidden="true"></div>
+
+                <!-- Navigation Links & Button Container --><div class="hidden md:flex items-center space-x-3 ml-4"> 
+                    <a href="#ai-agents-automations" class="text-white hover:text-[var(--mint)] transition-colors text-sm">AI Voice Agent</a>
+                    <a href="#our-process-section" class="text-white hover:text-[var(--mint)] transition-colors text-sm">Our Process</a>
+                    <a href="#faq-section" class="text-white hover:text-[var(--mint)] transition-colors text-sm">FAQ</a>
+                    <a href="#footer-section" class="text-white hover:text-[var(--mint)] transition-colors text-sm">Contact</a>
+                </div>
+                 <div class="hidden md:block pr-1 ml-4">
+                     <a href="#book-a-call-section" class="glow-button glow-button-small">
+                        Get Started
+                    </a>
+                </div>
+                
+                <button id="mobile-menu-open-btn" class="md:hidden text-white absolute right-4 top-1/2 -translate-y-1/2" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Main Content --><main id="page-main-content" class="px-4">
+            
+<!-- Hero Section --><div class="min-h-screen flex items-center justify-center fade-in-element">
+                <div class="max-w-4xl mx-auto text-center">
+                    <div id="text-content">
+                        <div class="flex justify-center mb-6">
+                            <div class="inline-flex items-center gap-x-3 bg-black bg-opacity-20 border border-[var(--mint-30)] rounded-full px-4 py-1.5">
+                                <div class="w-2 h-2 bg-[var(--mint)] rounded-full shadow-[0_0_10px_var(--mint)]" aria-hidden="true"></div>
+                                <p class="text-sm text-gray-200 tracking-wide">Start Using <span class="text-[var(--mint)]">AI</span> Before Your Competition</p>
+                            </div>
+                        </div>
+                        <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight">
+                            Providing your business with <span class="text-[var(--mint)]">AI</span> <span class="text-white">voice agents</span> that
+                            <span id="dynamic-text-container" class="block">
+                                <span id="dynamic-text" class="dynamic-text text-[var(--mint)]">save time</span>
+                            </span>
+                        </h1>
+                        <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-300 leading-relaxed">
+                            Transform your operations with <span class="text-[var(--mint)]">AI voice agents</span> built to scale.
+                        </p>
+                        <div class="mt-10 flex flex-col items-center justify-center">
+                            <a href="#book-a-call-section" class="glow-button">
+                                Get In Touch
+                            </a>
+                            <a href="#our-process-section" class="mt-4 inline-block text-sm text-gray-400 hover:text-gray-200 transition-colors">
+                                Learn about our 4-step process
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESTORED: Our Mission Section -->
+            <div id="our-mission-section" class="pb-20 fade-in-element">
+                <div class="flex justify-center mb-12">
+                    <div class="inline-flex items-center gap-x-3 bg-black bg-opacity-20 border border-[var(--mint-30)] rounded-full px-4 py-1.5">
+                        <div class="w-2 h-2 bg-[var(--mint)] rounded-full shadow-[0_0_10px_var(--mint)]" aria-hidden="true"></div>
+                        <p class="text-sm text-gray-200 tracking-wide">Our Mission</p>
+                    </div>
+                </div>
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+                        From <span id="mission-dynamic-text-1" class="dynamic-text text-[var(--mint)]">Outdated</span>
+                        to <span id="mission-dynamic-text-2" class="dynamic-text text-[var(--mint)]">automated</span>
+                    </h2>
+                    <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-300 leading-relaxed">
+                        We replace repetitive tasks with <span class="text-[var(--mint)]">AI voice agents</span>, so your team can focus on what truly matters.
+                    </p>
+                </div>
+            </div>
+
+            <!-- RESTORED: Money Counter Section -->
+            <div id="money-counter-section" class="w-full max-w-2xl mx-auto py-20 fade-in-element">
+                 <div class="transparent-box rounded-2xl p-8 text-center border border-[var(--mint-30)]">
+                    <p class="text-gray-400 text-lg mb-4">Money you could be missing out on:</p>
+                    <p id="money-counter" class="text-6xl md:text-7xl font-bold">-£15</p>
+                </div>
+            </div>
+            
+            <!-- RESTORED: Our Services Section -->
+            <div id="our-services-section" class="fade-in-element mb-12">
+                 <div class="flex justify-center mb-12">
+                    <div class="inline-flex items-center gap-x-3 bg-black/20 border border-[var(--mint-30)] rounded-full px-4 py-1.5">
+                        <div class="w-2 h-2 bg-[var(--mint)] rounded-full shadow-[0_0_10px_var(--mint)]" aria-hidden="true"></div>
+                        <p class="text-sm text-gray-200 tracking-wide">Our Service</p>
+                    </div>
+                </div>
+                
+                <!-- AI Voice Agents (Homepage Card) -->
+                <div id="ai-agents-automations" class="max-w-5xl mx-auto text-center mb-12">
+                     <div class="flex justify-center mb-8">
+                        <div class="inline-flex items-center gap-x-3 bg-black/20 border border-[var(--mint-30)] rounded-full px-4 py-1.5">
+                            <div class="w-2 h-2 bg-[var(--mint)] rounded-full shadow-[0_0_10px_var(--mint)]" aria-hidden="true"></div>
+                            <h2 class="text-2xl font-bold"><span class="text-[var(--mint)]">AI</span> Voice Agents</h2>
+                        </div>
+                    </div>
+                    <div id="agents" class="max-w-2xl mx-auto">
+                        <div class="transparent-box rounded-2xl p-6 border border-[var(--mint-30)] shadow-2xl shadow-[var(--mint-20)]/10">
+                            <div class="slide-content-inner">
+                                <div class="flex items-center mb-4">
+                                    <svg class="w-8 h-8 mr-4 text-[var(--mint)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                    <h3 class="text-xl font-bold text-white">Voice Agents</h3>
+                                </div>
+                                <ul class="text-gray-400 text-sm text-left list-disc list-inside space-y-2 leading-relaxed">
+                                    <li>Answer inbound calls 24/7 with natural, human-like voice responses</li>
+                                    <li>Book, reschedule, or cancel appointments by integrating with calendars and CRMs</li>
+                                    <li>Qualify leads automatically by asking questions and collecting key details</li>
+                                    <li>Send follow-up texts or emails after calls with confirmations or next steps</li>
+                                    <li>Handle FAQs and common support requests without needing a human rep</li>
+                                </ul>
+                            </div>
+                            <!-- Note: The 'expand-content' div was removed from here intentionally -->
+                            <div class="mt-4 flex justify-center">
+                                 <button id="voice-agents-btn" class="glow-button glow-button-small">
+                                    <span class="button-text">Learn More</span>
+                                 </button>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+                
+                <!-- Call Example (Homepage) -->
+                <div class="max-w-5xl mx-auto text-center mb-20">
+                    <div class="call-container">
+                      <!-- Incoming Call -->
+                      <div class="call-card">
+                        <svg class="w-7 h-7 text-[var(--mint)] mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div class="call-info text-left">
+                          <span class="status">Incoming Call</span>
+                          <span class="caller">Customer</span>
+                        </div>
+                        <div class="actions">
+                          <button class="btn hangup" aria-label="Decline call">
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                          </button>
+                          <button class="btn answer" aria-label="Answer call">
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="divider"></div>
+
+                      <!-- Answered Call -->
+                      <div class="call-card">
+                        <svg class="w-7 h-7 text-[var(--mint)] mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div class="call-info text-left">
+                          <span class="status">Answered by <strong class="highlight">Raylin</strong></span>
+                        </div>
+                        <div class="signal">
+                          <span class="bar"></span>
+                          <span class="bar"></span>
+                          <span class="bar"></span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESTORED: Our Process Section -->
+            <div id="our-process-section" class="pb-20 mb-20">
+                 <div class="fade-in-element">
+                    <div class="flex justify-center">
+                        <div class="inline-flex items-center gap-x-3 bg-black/20 border border-[var(--mint-30)] rounded-full px-4 py-1.5">
+                            <div class="w-2 h-2 bg-[var(--mint)] rounded-full" aria-hidden="true"></div>
+                            <p class="text-sm text-gray-200 tracking-wide">Our Process</p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-8">
+                        <h2 class="text-3xl font-bold text-white mb-4">
+                            Simple. <span class="text-[var(--mint)]">Smart.</span> Scalable.
+                        </h2>
+                        <p class="max-w-xl mx-auto text-gray-300 leading-relaxed">
+                            We craft intelligent automation tools that streamline your workflow — so you can focus on growth, not grunt work.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="max-w-4xl mx-auto mt-12 flex flex-col gap-8">
+                    <!-- Step 1 -->
+                    <div class="transparent-box rounded-2xl p-6 w-full md:w-1/2 md:self-start fade-in-element border border-[var(--mint-30)]">
+                        <div class="inline-flex items-center gap-x-2 bg-gray-800 rounded-full px-3 py-1 mb-4">
+                            <div class="w-2 h-2 bg-[var(--mint)] rounded-full" aria-hidden="true"></div>
+                            <span class="text-xs font-medium text-gray-300">STEP 1</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Smart Analyzing</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            We dig deep into your call workflows to spot inefficiencies and reveal where our <span class="text-[var(--mint)]">AI voice agent</span> can deliver the biggest return.
+                        </p>
+                        <p class="text-gray-400 text-sm mt-2 leading-relaxed">
+                           This step is crucial for tailoring the voice agent to your specific needs.
+                        </p>
+                        <div class="animation-box">
+                            <svg id="step1-animation" width="120" height="120" viewBox="0 0 100 100" aria-hidden="true">
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="#333" stroke-width="5"/>
+                                <circle class="spinner" cx="50" cy="50" r="45" fill="none" stroke="var(--mint)" stroke-width="5" stroke-linecap="round"/>
+                                <text x="50" y="55" text-anchor="middle" font-size="10" fill="#9CA3AF">Analyzing...</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="transparent-box rounded-2xl p-6 w-full md:w-1/2 md:self-end fade-in-element border border-[var(--mint-30)]">
+                        <div class="inline-flex items-center gap-x-2 bg-gray-800 rounded-full px-3 py-1 mb-4">
+                            <div class="w-2 h-2 bg-[var(--mint)] rounded-full" aria-hidden="true"></div>
+                            <span class="text-xs font-medium text-gray-300">STEP 2</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2"><span class="text-[var(--mint)]">AI</span> Development</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            We create tailored <span class="text-[var(--mint)]">AI</span> systems and automation solutions that seamlessly adapt to your business and scale with your goals.
+                        </hidden>
+                        <div class="animation-box">
+                            <div class="code-box" aria-hidden="true">
+                                <pre class="code-scroll text-gray-500"><code><span class="text-[var(--mint)]">class</span> <span class="text-[var(--mint)]">AutomationTrigger</span>:
+    <span class="text-[var(--mint)]">def</span> <span class="text-[var(--mint)]">__init__</span>(<span class="text-[var(--mint)]">self</span>, threshold):
+        <span class="text-[var(--mint)]">self</span>.threshold = threshold
+        <span class="text-[var(--mint)]">self</span>.status = <span class="text-[var(--mint)]">"active"</span>
+
+    <span class="text-[var(--mint)]">def</span> <span class="text-[var(--mint)]">check_value</span>(<span class="text-[var(--mint)]">self</span>, value):
+        <span class="text-[var(--mint)]">if</span> value > <span class="text-[var(--mint)]">self</span>.threshold:
+            <span class="text-[var(--mint)]">print</span>(<span class="text-[var(--mint)]">f"Triggered at {value}"</span>)
+            <span class="text-[var(--mint)]">return</span> <span class="text-[var(--mint)]">True</span>
+
+<span class="text-[var(--mint)]">class</span> <span class="text-[var(--mint)]">AutomationTrigger</span>:
+    <span class="text-[var(--mint)]">def</span> <span class="text-[var(--mint)]">__init__</span>(<span class="text-[var(--mint)]">self</span>, threshold):
+        <span class="text-[var(--mint)]">self</span>.threshold = threshold
+        <span class="text-[var(--mint)]">self</span>.status = <span class="text-[var(--mint)]">"active"</span>
+
+    <span class="text-[var(--mint)]">def</span> <span class="text-[var(--mint)]">check_value</span>(<span class="text-[var(--mint)]">self</span>, value):
+        <span class="text-[var(--mint)]">if</span> value > <span class="text-[var(--mint)]">self</span>.threshold:
+            <span class="text-[var(--mint)]">print</span>(<span class="text-[var(--mint)]">f"TriggerD at {value}"</span>)
+            <span class="text-[var(--mint)]">return</span> <span class="text-[var(--mint)]">True</span></code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="transparent-box rounded-2xl p-6 w-full md:w-1/2 md:self-start fade-in-element border border-[var(--mint-30)]">
+                        <div class="inline-flex items-center gap-x-2 bg-gray-800 rounded-full px-3 py-1 mb-4">
+                            <div class="w-2 h-2 bg-[var(--mint)] rounded-full" aria-hidden="true"></div>
+                            <span class="text-xs font-medium text-gray-300">STEP 3</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Plug In, Power Up</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            We integrate automation seamlessly into your existing tech stack — no disruption, no downtime — creating one powerful, unified system.
+                        </p>
+                        <div id="step3-animation" class="animation-box" aria-hidden="true">
+                            <div class="flex items-center justify-around w-full">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center">
+                                        <svg class="w-8 h-8 text-[var(--mint)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                    </div>
+                                    <p class="text-xs mt-2 text-gray-400">Our Solution</p>
+                                </div>
+                                <svg width="80" height="20" class="mx-4">
+                                    <line class="line-glow" x1="0" y1="10" x2="80" y2="10" stroke="var(--mint)" stroke-width="2" stroke-dasharray="5"/>
+                                </svg>
+                                <div class="text-center">
+                                    <div class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center relative">
+                                        <div id="stack-logos" class="relative w-8 h-8">
+                                            <!-- Logo 1: Email -->
+                                            <svg class="stack-logo" style="opacity: 1;" viewBox="0 0 24 24"><path fill="var(--mint)" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                            <!-- Logo 2: Chat -->
+                                            <svg class="stack-logo" style="opacity: 0;" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="var(--mint)"/></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs mt-2 text-gray-400">Your Stack</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="transparent-box rounded-2xl p-6 w-full md:w-1/2 md:self-end fade-in-element border border-[var(--mint-30)]">
+                        <div class="inline-flex items-center gap-x-2 bg-gray-800 rounded-full px-3 py-1 mb-4">
+                            <div class="w-2 h-2 bg-[var(--mint)] rounded-full" aria-hidden="true"></div>
+                            <span class="text-xs font-medium text-gray-300">STEP 4</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Scale That Learns With You</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            We continuously monitor, refine, and evolve your automations — using performance insights to drive lasting efficiency and exponential growth.
+                        </p>
+                         <div class="animation-box" aria-hidden="true">
+                            <div class="w-full text-xs text-gray-400">
+                                <div class="step4-item"><span>Chatbot System</span><div class="circle-arrow text-[var(--mint)] flex items-center">&check; <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div></div>
+                                <div class="step4-item"><span>Workflow System</span><div class="circle-arrow text-[var(--mint)] flex items-center">&check; <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div></div>
+                                <div class="step4-item"><span>Sales System</span><div class="circle-arrow text-[var(--mint)] flex items-center">&check; <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Agent Dashboard Section (Homepage) -->
+            <div id="ai-dashboard-section" class="fade-in-element pb-20 mb-20">
+                <div class="flex justify-center mb-12">
+                    <div class="inline-flex items-center gap-x-3 bg-black/20 border border-[var(--mint-30)] rounded-full px-4 py-1.5">
+                        <div class="w-2 h-2 bg-[var(--mint)] rounded-full shadow-[0_0_10px_var(--mint)]" aria-hidden="true"></div>
+                        <p class="text-sm text-gray-200 tracking-wide">AI Agent Dashboard</p>
+                    </div>
+                </div>
+                
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">AI Receptionist Dashboard</h2>
+                    <p class="text-lg text-gray-300 leading-relaxed">
+                        Real-time call analytics &amp; management
+                    </p>
+                </div>
+
+                <!-- NEW: 2-Column Layout -->
+                <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <!-- Left Column: Bullet Points -->
+                    <div class="text-left">
+                        <ul class="space-y-4 text-gray-300 leading-relaxed pr-6">
+                            <li class="flex items-start">
+                                <div class="w-2 h-2 bg-[var(--mint)] rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                                <span><strong>Real-time Analytics:</strong> Instantly view call volume, appointments booked, and reminder status.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-2 h-2 bg-[var(--mint)] rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                                <span><strong>Track Performance:</strong> Monitor weekly booking trends and analyze which channels (Voice, SMS, Email) are most effective.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-2 h-2 bg-[var(--mint)] rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                                <span><strong>Manage Workflow:</strong> See upcoming appointments, review recent calls, and manage escalated tasks, all in one place.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Right Column: Dashboard Panel -->
+                    <div class="transparent-box rounded-2xl p-4 sm:p-6 border border-[var(--mint-30)] shadow-2xl shadow-[var(--mint-20)]/20">
+                        
+                        <!-- Header / Search -->
+                        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                            <button class="flex-shrink-0 p-2 rounded-full bg-gray-700/50 hover:bg-gray-700 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </button>
+                            <div class="relative w-full max-w-xs">
+                                <input type="text" placeholder="Search patients, calls, or notes" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg py-2 px-4 pl-10 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-[var(--mint-60)] focus:border-[var(--mint-60)]">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Top Stats -->
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                            <!-- Stat Card 1 -->
+                            <div class="transparent-box rounded-lg p-4 border border-gray-700/50">
+                                <div class="flex items-center text-gray-400 text-sm mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                                    Calls handled
+                                </div>
+                                <div class="h-1.5 w-full bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[var(--mint)]" style="width: 70%"></div>
+                                </div>
+                            </div>
+                            <!-- Stat Card 2 -->
+                            <div class="transparent-box rounded-lg p-4 border border-gray-700/50">
+                                <div class="flex items-center text-gray-400 text-sm mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                    Appointments booked
+                                </div>
+                                <div class="h-1.5 w-full bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[var(--mint)]" style="width: 50%"></div>
+                                </div>
+                            </div>
+                            <!-- Stat Card 3 -->
+                            <div class="transparent-box rounded-lg p-4 border border-gray-700/50">
+                                <div class="flex items-center text-gray-400 text-sm mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+                                    Reminders sent
+                                </div>
+                                <div class="h-1.5 w-full bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[var(--mint)]" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <!-- Stat Card 4 -->
+                            <div class="transparent-box rounded-lg p-4 border border-gray-700/50">
+                                <div class="flex items-center text-gray-400 text-sm mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" /></svg>
+                                    Show rate
+                                </div>
+                                <div class="h-1.5 w-full bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[var(--mint)]" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Charts -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                            <!-- Bookings this week -->
+                            <div class="transparent-box rounded-lg p-4 border border-gray-700/50">
+                                <h4 class="text-sm font-medium text-gray-300 mb-4">Bookings this week</h4>
+                                <div class="chart-bar-weekly">
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 20%"></div><div class="bar-segment bar-segment-booked" style="height: 40%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 10%"></div><div class="bar-segment bar-segment-booked" style="height: 60%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 30%"></div><div class="bar-segment bar-segment-booked" style="height: 50%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 15%"></div><div class="bar-segment bar-segment-booked" style="height: 80%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 10%"></div><div class="bar-segment bar-segment-booked" style="height: 70%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 5%"></div><div class="bar-segment bar-segment-booked" style="height: 30%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 10%"></div><div class="bar-segment bar-segment-booked" style="height: 25%"></div></div>
+                                </div>
+                                <div class="chart-labels">
+                                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                                </div>
+                                <div class="chart-legend">
+                                    <div class="legend-item"><div class="legend-dot" style="background-color: var(--mint-70)"></div> Booked</div>
+                                    <div class="legend-item"><div class="legend-dot" style="background-color: #4A5568"></div> Rescheduled</div>
+                                </div>
+                            </div>
+                            <!-- Reminders by channel -->
+                            <div class="transparent-box rounded-lg p-4 border border-gray-700/50">
+                                <h4 class="text-sm font-medium text-gray-300 mb-4">Reminders by channel</h4>
+                                <div class="chart-bar-weekly">
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 20%"></div><div class="bar-segment bar-segment-sms" style="height: 30%"></div><div class="bar-segment bar-segment-voice" style="height: 40%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 25%"></div><div class="bar-segment bar-segment-sms" style="height: 35%"></div><div class="bar-segment bar-segment-voice" style="height: 30%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 15%"></div><div class="bar-segment bar-segment-sms" style="height: 30%"></div><div class="bar-segment bar-segment-voice" style="height: 45%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 20%"></div><div class="bar-segment bar-segment-sms" style="height: 40%"></div><div class="bar-segment bar-segment-voice" style="height: 30%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 22%"></div><div class="bar-segment bar-segment-sms" style="height: 28%"></div><div class="bar-segment bar-segment-voice" style="height: 40%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 18%"></div><div class="bar-segment bar-segment-sms" style="height: 32%"></div><div class="bar-segment bar-segment-voice" style="height: 40%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 25%"></div><div class="bar-segment bar-segment-sms" style="height: 30%"></div><div class="bar-segment bar-segment-voice" style="height: 35%"></div></div>
+                                </div>
+                                <div class="chart-labels">
+                                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                                </div>
+                                <div class="chart-legend">
+                                    <div class="legend-item"><div class="legend-dot" style="background-color: var(--mint-70)"></div> Voice</div>
+                                    <div class="legend-item"><div class="legend-dot" style="background-color: var(--mint-40)"></div> SMS</div>
+                                    <div class="legend-item"><div class="legend-dot" style="background-color: #4A5568"></div> Email</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Table -->
+                        <div>
+                            <!-- Tabs -->
+                            <div class="flex border-b border-gray-700 mb-4">
+                                <button class="py-2 px-4 text-[var(--mint)] border-b-2 border-[var(--mint)] text-sm font-medium">Upcoming appointments</button>
+                                <button class="py-2 px-4 text-gray-400 hover:text-gray-200 text-sm font-medium">Recent calls</button>
+                                <button class="py-2 px-4 text-gray-400 hover:text-gray-200 text-sm font-medium">At risk</button>
+                            </div>
+                            <!-- Table Content -->
+                            <div class="overflow-x-auto">
+                                <table class="dashboard-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Channel</th>
+                                            <th>Patient</th>
+                                            <th>Intent</th>
+                                            <th>Status</th>
+                                            <th>Owner</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Phone</td>
+                                            <td>A. Khan</td>
+                                            <td>Booking</td>
+                                            <td><span class="status-pill status-confirmed">Confirmed</span></td>
+                                            <td>Bot</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Chat</td>
+                                            <td>S. Patel</td>
+                                            <td>Pricing</td>
+                                            <td><span class="status-pill status-resolved">Resolved</span></td>
+                                            <td>Bot</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>R. Wood</td>
+                                            <td>Escalation</td>
+                                            <td><span class="status-pill status-assigned">Assigned</span></td>
+                                            <td>Ops</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> <!-- End Right Column (dashboard) & Grid -->
+            </div>
+            <!-- End Dashboard Preview Section -->
+
+
+            <div id="benefits-section" class="fade-in-element pb-20 mb-20">
+                 <div class="flex justify-center mb-12">
+                    <div class="inline-flex items-center gap-x-3 bg-black/20 border border-[var(--mint-30)] rounded-full px-4 py-1.5">
+                        <div class="w-2 h-2 bg-[var(--mint)] rounded-full shadow-[0_0_10px_var(--mint)]" aria-hidden="true"></div>
+                        <p class="text-sm text-gray-200 tracking-wide">Benefits With <span class="text-[var(--mint)]">AI</span></p>
+                    </div>
+                </div>
+                <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Benefit 1 --><div class="transparent-box rounded-2xl p-6 text-center h-full border border-[var(--mint-30)]">
+                        <div class="flex justify-center mb-4">
+                           <svg class="w-10 h-10 text-[var(--mint)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">24/7 Availability</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Our <span class="text-[var(--mint)]">AI</span> agents work around the clock, ensuring your customers receive instant support and engagement anytime, day or night.</p>
+                    </div>
+                     <!-- Benefit 2 --><div class="transparent-box rounded-2xl p-6 text-center h-full border border-[var(--mint-30)]">
+                         <div class="flex justify-center mb-4">
+                           <svg class="w-10 h-10 text-[var(--mint)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Error Reduction</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Minimize human error in data entry and repetitive tasks. Our <span class="text-[var(--mint)]">AI</span> ensures accuracy and consistency across all operations.</p>
+                    </div>
+                     <!-- Benefit 3 --><div class="transparent-box rounded-2xl p-6 text-center h-full border border-[var(--mint-30)]">
+                         <div class="flex justify-center mb-4">
+                           <svg class="w-10 h-10 text-[var(--mint)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Increased Efficiency</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Automate workflows and handle thousands of interactions simultaneously, allowing your team to focus on strategic, high-impact tasks.</p>
+                    </div>
+                     <!-- Benefit 4 --><div class="transparent-box rounded-2xl p-6 text-center h-full border border-[var(--mint-30)]">
+                         <div class="flex justify-center mb-4">
+                           <svg class="w-10 h-10 text-[var(--mint)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Enhanced Experience</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Provide personalized and instant responses to every customer, improving satisfaction and building stronger relationships with your brand.</p>
+                    </div>
+                     <!-- Benefit 5 --><div class="transparent-box rounded-2xl p-6 text-center h-full border border-[var(--mint-30)]">
+                         <div class="flex justify-center mb-4">
+                           <svg class="w-10 h-10 text-[var(--mint)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M7 7l10 10m0-13v5h-5"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Infinite Scalability</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Our <span class="text-[var(--mint)]">AI</span> solutions grow with your business, effortlessly handling increased demand without the need to hire and train more staff.</p>
+                    </div>
+                     <!-- Benefit 6 --><div class="transparent-box rounded-2xl p-6 text-center h-full border border-[var(--mint-30)]">
+                        <div class="flex justify-center mb-4">
+                           <svg class="w-10 h-10 text-[var(--mint)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Data-Driven Insights</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Gain valuable insights from customer interactions and operational data, allowing you to make smarter, more informed business decisions.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FAQ Section --><div id="faq-section" class="fade-in-element max-w-3xl mx-auto pb-20 mb-20">
+                <div class="flex justify-center mb-12">
+                    <div class="inline-flex items-center gap-x-3 bg-black/20 border border-[var(--mint-30)] rounded-full px-4 py-1.5">
+                        <div class="w-2 h-2 bg-[var(--mint)] rounded-full shadow-[0_0_10px_var(--mint)]" aria-hidden="true"></div>
+                        <p class="text-sm text-gray-200 tracking-wide">Frequently Asked Questions</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- FAQ 1 --><div class="faq-item">
+                        <button id="faq-btn-1" class="faq-question" aria-expanded="false" aria-controls="faq-content-1">
+                            <span>How long does setup take?</span>
+                            <svg id="faq-arrow-1" class="faq-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="faq-content-1" class="faq-answer">
+                            <p>Our setup is fast. Most <span class="text-[var(--mint)]">AI</span> agents go live within 24-48 hours. We handle all the technical integration so you can start automating calls and tasks immediately.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ 2 --><div class="faq-item">
+                        <button id="faq-btn-2" class="faq-question" aria-expanded="false" aria-controls="faq-content-2">
+                            <span>Do you support multiple languages?</span>
+                            <svg id="faq-arrow-2" class="faq-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="faq-content-2" class="faq-answer">
+                            <p>Yes, our <span class="text-[var(--mint)]">AI</span> agents are fluent in over 20 languages, allowing you to seamlessly communicate with a global customer base.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ 3 --><div class="faq-item">
+                        <button id="faq-btn-3" class="faq-question" aria-expanded="false" aria-controls="faq-content-3">
+                            <span>Is data secure?</span>
+                            <svg id="faq-arrow-3" class="faq-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="faq-content-3" class="faq-answer">
+                            <p>Absolutely. We follow industry-best security practices, including data encryption at rest and in transit, and maintain strict access controls to ensure your data is always protected.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ 4 --><div class="faq-item">
+                        <button id="faq-btn-4" class="faq-question" aria-expanded="false" aria-controls="faq-content-4">
+                            <span>Can I bring my own model?</span>
+                            <svg id="faq-arrow-4" class="faq-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="faq-content-4" class="faq-answer">
+                            <p>Yes. While we provide state-of-the-art <span class="text-[var(--mint)]">AI</span> models, our platform is flexible. You can connect via API to use your own custom models or preferred third-party <span class="text-[var(--mint)]">AI</span> services.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Book a Call Section --><div id="book-a-call-section" class="fade-in-element pb-20 mb-20">
+                <div class="flex justify-center mb-12">
+                    <div class="inline-flex items-center gap-x-3 bg-black/20 border border-[var(--mint-30)] rounded-full px-4 py-1.5">
+                        <div class="w-2 h-2 bg-[var(--mint)] rounded-full shadow-[0_0_10px_var(--mint)]" aria-hidden="true"></div>
+                        <p class="text-sm text-gray-200 tracking-wide">Book A Call</p>
+                    </div>
+                </div>
+                <div class="max-w-4xl mx-auto">
+                    <!-- Cal.com Inline Embed --><div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-ai-meeting-session">
+                        <a href="https://cal.com/raylin.ai/ai-meeting-session" class="text-[var(--mint)] hover:underline">Book your strategy call here</a>
+                    </div>
+                    <noscript>
+                        <p class="text-center text-gray-400">Please enable JavaScript to view the interactive calendar, or <a href="https://cal.com/raylin.ai/ai-meeting-session" class="text-[var(--mint)] hover:underline">book your call directly on Cal.com</a>.</p>
+                    </noscript>
+                    <!-- End Cal.com --></div>
+            </div>
+
+        </main>
+        
+        <!-- Footer --><footer id="footer-section" class="border-t border-gray-800 mt-20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                    <!-- Footer Logo --><div>
+                        <a href="" aria-label="Raylin.ai Homepage" class="logo logo-header"> <!-- Applied logo classes here --><!-- NEW LOGO STRUCTURE --><div class="logo-text-new">
+                               <span>raylin</span>
+                           </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Footer Nav --><div class="md:text-center">
+                        <h4 class="text-gray-400 text-sm font-semibold mb-3">Navigation</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#ai-agents-automations" class="text-sm text-white hover:text-[var(--mint)] transition-colors">AI Voice Agent</a></li>
+                            <li><a href="#our-process-section" class="text-sm text-white hover:text-[var(--mint)] transition-colors">Our Process</a></li>
+                            <li><a href="#faq-section" class="text-sm text-white hover:text-[var(--mint)] transition-colors">FAQ</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Footer Contact --><div class="md:text-right">
+                        <h4 class="text-gray-400 text-sm font-semibold mb-3">Contact</h4>
+                        <a href="mailto:team@raylinai.com" class="text-sm text-white hover:text-[var(--mint)] transition-colors">team@raylinai.com</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Copyright --><div class="border-t border-gray-800 py-6">
+                <p class="text-center text-gray-500 text-sm">
+                    &copy; 2025 Raylin.ai. All rights reserved. 
+                    <a href="#" class="text-gray-400 hover:text-gray-300 ml-2">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-gray-300 ml-2">Terms of Service</a>
+                </p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- NEW: AI Voice Agent Page (Hidden by default) -->
+    <!-- This was the duplicated block, I am removing it. -->
+    <!-- <div id="ai-voice-agent-page" class="hidden min-h-screen w-full px-4 sm:px-6 lg:px-8 py-16 text-white"> ... </div> -->
+
+    <!-- CORRECT AI Voice Agent Page (Hidden by default) -->
+    <div id="ai-voice-agent-page" class="hidden min-h-screen w-full px-4 sm:px-6 lg:px-8 py-16 text-white">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- Back Button -->
+            <button id="back-to-main-btn" class="glow-button glow-button-small mb-12 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span>Back</span>
+            </button>
+
+            <!-- Page Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white mb-4">AI Voice Agent</h1>
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    Answer calls, Outbound calls, qualify, route, and book appointments 24/7 — in your brand voice.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+                    <a href="#book-a-call-section" id="receptionist-book-btn" class="glow-button">
+                        Get Started
+                    </a>
+                    <!-- REMOVED "See automations" link -->
+                </div>
+            </div>
+
+            <!-- 4 Feature Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <!-- Card 1 -->
+                <div class="transparent-box rounded-2xl p-6 border border-[var(--mint-30)] h-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--mint)] mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <h3 class="text-lg font-bold text-white mb-2">Answers + Qualifies</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Natural voice in 20+ languages with policy guardrails.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="transparent-box rounded-2xl p-6 border border-[var(--mint-30)] h-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--mint)] mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                    </svg>
+                    <h3 class="text-lg font-bold text-white mb-2">Routes & escalates</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Smart rules to route to humans or departments instantly.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="transparent-box rounded-2xl p-6 border border-[var(--mint-30)] h-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--mint)] mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <h3 class="text-lg font-bold text-white mb-2">Books & reminds</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Real-time calendar booking with SMS/email reminders.</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="transparent-box rounded-2xl p-6 border border-[var(--mint-30)] h-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--mint)] mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                    </svg>
+                    <h3 class="text-lg font-bold text-white mb-2">Outbound Insights</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Proactively call and gather information from clients to update records.</p>
+                </div>
+            </div>
+
+            <!-- Page Content Grid -->
+            <!-- MODIFIED: Removed grid classes, now a simple container -->
+            <div class="w-full">
+                
+                <!-- Left/Main Column -->
+                <!-- MODIFIED: Removed col-span class -->
+                <div class="space-y-8">
+                    <!-- Call Example -->
+                    <!-- MODIFIED: Removed transparent-box and border classes -->
+                    <div class=""> 
+                        <h3 class="text-lg font-bold text-white mb-6 text-center">What a call looks like</h3>
+                        <div class="max-w-md mx-auto">
+                            <div class="call-container">
+                                <!-- Incoming Call --><div class="call-card">
+                                    <svg class="w-7 h-7 text-[var(--mint)] mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <div class="call-info text-left">
+                                      <span class="status">Incoming Call</span>
+                                      <span class="caller">Customer</span>
+                                    </div>
+                                    <div class="actions">
+                                      <button class="btn hangup" aria-label="Decline call">
+                                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                      </button>
+                                      <button class="btn answer" aria-label="Answer call">
+                                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                                      </button>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <!-- Answered Call --><div class="call-card">
+                                    <svg class="w-7 h-7 text-[var(--mint)] mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <div class="call-info text-left">
+                                      <span class="status">Answered by <strong class="highlight">Raylin</strong></span>
+                                    </div>
+                                    <div class="signal">
+                                      <span class="bar"></span>
+                                      <span class="bar"></span>
+                                      <span class="bar"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right/Stats Column - ENTIRE BLOCK REMOVED -->
+
+            </div>
+
+            <!-- REBUILT: Dashboard Preview Section -->
+            <div class="mt-16 sm:mt-24">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">AI Receptionist Dashboard</h2>
+                    <p class="text-lg text-gray-300 leading-relaxed">
+                        Real-time call analytics &amp; management
+                    </p>
+                </div>
+                <!-- NEW: 2-Column Layout -->
+                <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <!-- Left Column: Bullet Points -->
+                    <div class="text-left">
+                        <ul class="space-y-4 text-gray-300 leading-relaxed pr-6">
+                            <li class="flex items-start">
+                                <div class="w-2 h-2 bg-[var(--mint)] rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                                <span><strong>Real-time Analytics:</strong> Instantly view call volume, appointments booked, and reminder status.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-2 h-2 bg-[var(--mint)] rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                                <span><strong>Track Performance:</strong> Monitor weekly booking trends and analyze which channels (Voice, SMS, Email) are most effective.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-2 h-2 bg-[var(--mint)] rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                                <span><strong>Manage Workflow:</strong> See upcoming appointments, review recent calls, and manage escalated tasks, all in one place.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Right Column: Dashboard Panel -->
+                    <div class="transparent-box rounded-2xl p-4 sm:p-6 border border-[var(--mint-30)] shadow-2xl shadow-[var(--mint-20)]/20">
+                        
+                        <!-- Header / Search -->
+                        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                            <button class="flex-shrink-0 p-2 rounded-full bg-gray-700/50 hover:bg-gray-700 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </button>
+                            <div class="relative w-full max-w-xs">
+                                <input type="text" placeholder="Search patients, calls, or notes" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg py-2 px-4 pl-10 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-[var(--mint-60)] focus:border-[var(--mint-60)]">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Top Stats -->
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                            <!-- Stat Card 1 -->
+                            <div class="transparent-box rounded-lg p-4 border border-gray-700/50">
+                                <div class="flex items-center text-gray-400 text-sm mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                                    Calls handled
+                                </div>
+                                <div class="h-1.5 w-full bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[var(--mint)]" style="width: 70%"></div>
+                                </div>
+                            </div>
+                            <!-- Stat Card 2 -->
+                            <div class="transparent-box rounded-lg p-4 border border-gray-700/50">
+                                <div class="flex items-center text-gray-400 text-sm mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                    Appointments booked
+                                </div>
+                                <div class="h-1.5 w-full bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[var(--mint)]" style="width: 50%"></div>
+                                </div>
+                            </div>
+                            <!-- Stat Card 3 -->
+                            <div class="transparent-box rounded-lg p-4 border border-gray-700/50">
+                                <div class="flex items-center text-gray-400 text-sm mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+                                    Reminders sent
+                                </div>
+                                <div class="h-1.5 w-full bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[var(--mint)]" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <!-- Stat Card 4 -->
+                            <div class="transparent-box rounded-lg p-4 border border-gray-700/50">
+                                <div class="flex items-center text-gray-400 text-sm mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" /></svg>
+                                    Show rate
+                                </div>
+                                <div class="h-1.5 w-full bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[var(--mint)]" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Charts -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                            <!-- Bookings this week -->
+                            <div class="transparent-box rounded-lg p-4 border border-gray-700/50">
+                                <h4 class="text-sm font-medium text-gray-300 mb-4">Bookings this week</h4>
+                                <div class="chart-bar-weekly">
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 20%"></div><div class="bar-segment bar-segment-booked" style="height: 40%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 10%"></div><div class="bar-segment bar-segment-booked" style="height: 60%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 30%"></div><div class="bar-segment bar-segment-booked" style="height: 50%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 15%"></div><div class="bar-segment bar-segment-booked" style="height: 80%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 10%"></div><div class="bar-segment bar-segment-booked" style="height: 70%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 5%"></div><div class="bar-segment bar-segment-booked" style="height: 30%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-rescheduled" style="height: 10%"></div><div class="bar-segment bar-segment-booked" style="height: 25%"></div></div>
+                                </div>
+                                <div class="chart-labels">
+                                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                                </div>
+                                <div class="chart-legend">
+                                    <div class="legend-item"><div class="legend-dot" style="background-color: var(--mint-70)"></div> Booked</div>
+                                    <div class="legend-item"><div class="legend-dot" style="background-color: #4A5568"></div> Rescheduled</div>
+                                </div>
+                            </div>
+                            <!-- Reminders by channel -->
+                            <div class="transparent-box rounded-lg p-4 border border-gray-700/50">
+                                <h4 class="text-sm font-medium text-gray-300 mb-4">Reminders by channel</h4>
+                                <div class="chart-bar-weekly">
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 20%"></div><div class="bar-segment bar-segment-sms" style="height: 30%"></div><div class="bar-segment bar-segment-voice" style="height: 40%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 25%"></div><div class="bar-segment bar-segment-sms" style="height: 35%"></div><div class="bar-segment bar-segment-voice" style="height: 30%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 15%"></div><div class="bar-segment bar-segment-sms" style="height: 30%"></div><div class="bar-segment bar-segment-voice" style="height: 45%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 20%"></div><div class="bar-segment bar-segment-sms" style="height: 40%"></div><div class="bar-segment bar-segment-voice" style="height: 30%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 22%"></div><div class="bar-segment bar-segment-sms" style="height: 28%"></div><div class="bar-segment bar-segment-voice" style="height: 40%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 18%"></div><div class="bar-segment bar-segment-sms" style="height: 32%"></div><div class="bar-segment bar-segment-voice" style="height: 40%"></div></div>
+                                    <div class="bar-stack"><div class="bar-segment bar-segment-email" style="height: 25%"></div><div class="bar-segment bar-segment-sms" style="height: 30%"></div><div class="bar-segment bar-segment-voice" style="height: 35%"></div></div>
+                                </div>
+                                <div class="chart-labels">
+                                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                                </div>
+                                <div class="chart-legend">
+                                    <div class="legend-item"><div class="legend-dot" style="background-color: var(--mint-70)"></div> Voice</div>
+                                    <div class="legend-item"><div class="legend-dot" style="background-color: var(--mint-40)"></div> SMS</div>
+                                    <div class="legend-item"><div class="legend-dot" style="background-color: #4A5568"></div> Email</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Table -->
+                        <div>
+                            <!-- Tabs -->
+                            <div class="flex border-b border-gray-700 mb-4">
+                                <button class="py-2 px-4 text-[var(--mint)] border-b-2 border-[var(--mint)] text-sm font-medium">Upcoming appointments</button>
+                                <button class="py-2 px-4 text-gray-400 hover:text-gray-200 text-sm font-medium">Recent calls</button>
+                                <button class="py-2 px-4 text-gray-400 hover:text-gray-200 text-sm font-medium">At risk</button>
+                            </div>
+                            <!-- Table Content -->
+                            <div class="overflow-x-auto">
+                                <table class="dashboard-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Channel</th>
+                                            <th>Patient</th>
+                                            <th>Intent</th>
+                                            <th>Status</th>
+                                            <th>Owner</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Phone</td>
+                                            <td>A. Khan</td>
+                                            <td>Booking</td>
+                                            <td><span class="status-pill status-confirmed">Confirmed</span></td>
+                                            <td>Bot</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Chat</td>
+                                            <td>S. Patel</td>
+                                            <td>Pricing</td>
+                                            <td><span class="status-pill status-resolved">Resolved</span></td>
+                                            <td>Bot</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>R. Wood</td>
+                                            <td>Escalation</td>
+                                            <td><span class="status-pill status-assigned">Assigned</span></td>
+                                            <td>Ops</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> <!-- End Right Column (dashboard) & Grid -->
+            </div>
+            <!-- End Dashboard Preview Section -->
+
+        </div>
+    </div>
+
+    <script>
+        // All scripts consolidated into one block
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Add 'js-collapsible' class to body to enable CSS-based collapsing
+            document.body.classList.add('js-collapsible');
+            
+            // --- Accordion Toggle Functionality (for Services & FAQ) ---
+            function setupAccordion(buttonId, contentId, containerClass) {
+                const button = document.getElementById(buttonId);
+                const content = document.getElementById(contentId);
+                const item = button ? button.closest(containerClass) : null;
+
+                if (button && content && item) {
+                    // Find all expandable content within this item
+                    const expandableContents = item.querySelectorAll('.expand-content, .faq-answer');
+                    
+                    button.addEventListener('click', () => {
+                        const isOpen = item.classList.contains('open');
+                        
+                        // Close all other open items in the same group
+                        const parent = item.parentElement;
+                        if (parent) {
+                            parent.querySelectorAll(containerClass + '.open').forEach(openItem => {
+                                if (openItem !== item) {
+                                    openItem.classList.remove('open');
+                                    openItem.querySelectorAll('.faq-answer, .expand-content').forEach(c => c.style.maxHeight = '0px');
+                                    const openButton = openItem.querySelector('button');
+                                    if (openButton) {
+                                        openButton.setAttribute('aria-expanded', 'false');
+                                        if (openButton.querySelector('.button-text')) {
+                                            openButton.querySelector('.button-text').textContent = 'Learn More';
+                                        }
+                                    }
+                                }
+                            });
+                        }
+
+                        // Toggle the clicked item
+                        if (!isOpen) {
+                            let totalHeight = 0;
+                            expandableContents.forEach(c => {
+                                totalHeight += c.scrollHeight;
+                            });
+                            
+                            // Set height for the main content wrapper
+                            // content.style.maxHeight = totalHeight + 'px'; // OLD
+                            // NEW: Check if content is not null before setting maxHeight
+                            if (content) {
+                                content.style.maxHeight = totalHeight + 'px';
+                            }
+                            item.classList.add('open');
+                            button.setAttribute('aria-expanded', 'true');
+                            if (button.querySelector('.button-text')) {
+                                button.querySelector('.button-text').textContent = 'Show Less';
+                            }
+                        } else {
+                            expandableContents.forEach(c => c.style.maxHeight = '0px');
+                            // NEW: Check if content is not null before setting maxHeight
+                            if (content) {
+                                content.style.maxHeight = '0px';
+                            }
+                            item.classList.remove('open');
+                            button.setAttribute('aria-expanded', 'false');
+                            if (button.querySelector('.button-text')) {
+                                button.querySelector('.button-text').textContent = 'Learn More';
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Setup for Service boxes
+            // REMOVED: setupAccordion('voice-agents-btn', 'voice-agents-more', '.transparent-box');
+            
+            // Setup for FAQ items
+            setupAccordion('faq-btn-1', 'faq-content-1', '.faq-item');
+            setupAccordion('faq-btn-2', 'faq-content-2', '.faq-item');
+            setupAccordion('faq-btn-3', 'faq-content-3', '.faq-item');
+            setupAccordion('faq-btn-4', 'faq-content-4', '.faq-item');
+
+
+            // --- NEW: Page Navigation Logic ---
+            const mainContentEl = document.getElementById('main-content');
+            const receptionistPageEl = document.getElementById('ai-voice-agent-page'); // Updated ID
+            const learnMoreBtn = document.getElementById('voice-agents-btn');
+            const backBtn = document.getElementById('back-to-main-btn');
+            const receptionistBookBtn = document.getElementById('receptionist-book-btn');
+            const receptionistProcessBtn = document.getElementById('receptionist-process-btn');
+            
+            function showReceptionistPage() {
+                if (mainContentEl && receptionistPageEl) {
+                    mainContentEl.classList.add('hidden');
+                    receptionistPageEl.classList.remove('hidden');
+                    window.scrollTo(0, 0);
+                } else {
+                    // NEW: Debugging log
+                    console.error("Could not find main content or receptionist page element.");
+                }
+            }
+
+            function showMainContent(scrollToId = null) {
+                if (mainContentEl && receptionistPageEl) {
+                    receptionistPageEl.classList.add('hidden');
+                    mainContentEl.classList.remove('hidden');
+                    if (scrollToId) {
+                        const section = document.querySelector(scrollToId);
+                        if (section) {
+                            // Use setTimeout to ensure scrolling happens after content is visible
+                            setTimeout(() => {
+                                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }, 0);
+                        }
+                    }
+                }
+            }
+
+            if (learnMoreBtn) {
+                // Change "Learn More" button to navigate instead of accordion
+                learnMoreBtn.addEventListener('click', (e) => {
+                    e.preventDefault(); // Stop any default button behavior
+                    showReceptionistPage();
+                });
+                // Ensure the button text remains "Learn More"
+                const buttonText = learnMoreBtn.querySelector('.button-text');
+                if (buttonText) {
+                    buttonText.textContent = 'Learn More';
+                } else {
+                    // NEW: Debugging log
+                    console.error("Could not find button text element.");
+                }
+            }
+
+            if (backBtn) {
+                backBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showMainContent('#ai-agents-automations');
+                });
+            }
+
+            // Make buttons on new page scroll to sections on main page
+            if (receptionistBookBtn) {
+                receptionistBookBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showMainContent('#book-a-call-section');
+                });
+            }
+
+            if (receptionistProcessBtn) {
+                receptionistProcessBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showMainContent('#our-process-section');
+                });
+            }
+
+
+            // --- Mobile Menu ---
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openMenuBtn = document.getElementById('mobile-menu-open-btn');
+            const closeMenuBtn = document.getElementById('mobile-menu-close-btn');
+            const navLinks = document.querySelectorAll('.mobile-nav-link');
+            const mainContent = document.getElementById('page-main-content');
+            const pageHeader = document.getElementById('page-header');
+
+            function openMenu() {
+                if (mobileMenu && openMenuBtn) {
+                    mobileMenu.classList.add('open');
+                    openMenuBtn.setAttribute('aria-expanded', 'true');
+                    if (mainContent) mainContent.setAttribute('aria-hidden', 'true');
+                    if (pageHeader) pageHeader.setAttribute('aria-hidden', 'true');
+                }
+            }
+
+            function closeMenu() {
+                if (mobileMenu && openMenuBtn) {
+                    mobileMenu.classList.remove('open');
+                    openMenuBtn.setAttribute('aria-expanded', 'false');
+                    if (mainContent) mainContent.removeAttribute('aria-hidden');
+                    if (pageHeader) pageHeader.removeAttribute('aria-hidden');
+                }
+            }
+
+            if (openMenuBtn) {
+                openMenuBtn.addEventListener('click', openMenu);
+            }
+            if (closeMenuBtn) {
+                closeMenuBtn.addEventListener('click', closeMenu);
+            }
+            navLinks.forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+
+
+            // --- Dynamic Text Changers ---
+            const dynamicTextElement = document.getElementById('dynamic-text');
+            if (dynamicTextElement) {
+                const phrases = ["save time", "cut costs", "boost sales"];
+                let currentIndex = 0;
+                setInterval(() => {
+                    currentIndex = (currentIndex + 1) % phrases.length;
+                    dynamicTextElement.style.opacity = '0';
+                    setTimeout(() => {
+                        dynamicTextElement.textContent = phrases[currentIndex];
+                        dynamicTextElement.style.opacity = '1';
+                    }, 300); // Quicker fade
+                }, 2500); // Quicker rotation
+            }
+
+            const missionDynamicText1 = document.getElementById('mission-dynamic-text-1');
+            const missionDynamicText2 = document.getElementById('mission-dynamic-text-2');
+            if (missionDynamicText1 && missionDynamicText2) {
+                const missionPhrases1 = ["Outdated", "Inefficient", "Unreliable"];
+                const missionPhrases2 = ["automated", "Streamlined", "Optimised"]; // <-- Typo fixed here!
+                let missionIndex = 0;
+                setInterval(() => {
+                    missionIndex = (missionIndex + 1) % missionPhrases1.length;
+                    
+                    missionDynamicText1.style.opacity = '0';
+                    missionDynamicText2.style.opacity = '0';
+
+                    setTimeout(() => {
+                        missionDynamicText1.textContent = missionPhrases1[missionIndex];
+                        missionDynamicText2.textContent = missionPhrases2[missionIndex];
+                        missionDynamicText1.style.opacity = '1';
+                        missionDynamicText2.style.opacity = '1';
+                    }, 300); // Quicker fade
+                }, 2500); // Quicker rotation
+            }
+
+            // --- Step 3 Logo Cycler ---
+            const stackLogos = document.querySelectorAll('#stack-logos .stack-logo');
+            if (stackLogos.length > 0) {
+                let currentLogoIndex = 0;
+                setInterval(() => {
+                    stackLogos[currentLogoIndex].style.opacity = '0';
+                    currentLogoIndex = (currentLogoIndex + 1) % stackLogos.length;
+                    stackLogos[currentLogoIndex].style.opacity = '1';
+                }, 2000);
+            }
+            
+            // --- Intersection Observers (Fade-in, Money Counter, Cal.com) ---
+            const elementsToObserve = document.querySelectorAll('.fade-in-element');
+            let moneyCounterValue = 15;
+            let counterInterval = null;
+            let calLoaded = false;
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // Fade-in elements
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+
+                    // Lazy-load Money Counter
+                    if (entry.target.id === 'money-counter-section' && entry.isIntersecting) {
+                        if (!counterInterval) {
+                            const moneyCounterElement = document.getElementById('money-counter');
+                            if (moneyCounterElement) {
+                                counterInterval = setInterval(() => {
+                                    moneyCounterElement.style.opacity = '0';
+                                    setTimeout(() => {
+                                        moneyCounterValue += Math.floor(Math.random() * 3) + 1;
+                                        moneyCounterElement.textContent = `-£${moneyCounterValue}`;
+                                        moneyCounterElement.style.opacity = '1';
+                                    }, 300);
+                                }, 1000);
+                            }
+                        }
+                    } else if (entry.target.id === 'money-counter-section' && !entry.isIntersecting) {
+                        clearInterval(counterInterval);
+                        counterInterval = null;
+                    }
+                    
+                    // Lazy-load Cal.com
+                    if (entry.target.id === 'book-a-call-section' && entry.isIntersecting && !calLoaded) {
+                        calLoaded = true;
+                        (function (C, A, L) {
+                            let p = function (a, ar) { a.q.push(ar); };
+                            let d = C.document;
+                            C.Cal = C.Cal || function () {
+                                let cal = C.Cal; let ar = arguments;
+                                if (!cal.loaded) {
+                                    cal.ns = {}; cal.q = cal.q || [];
+                                    d.head.appendChild(d.createElement("script")).src = A;
+                                    cal.loaded = true;
+
+                                }
+                                if (ar[0] === L) {
+                                    const api = function () { p(api, arguments); };
+                                    const namespace = ar[1];
+                                    api.q = api.q || [];
+                                    if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar);
+                                    return;
+                                }
+                                p(cal, ar);
+                            };
+                        })(window, "https://app.cal.com/embed/embed.js", "init");
+                        Cal("init", "ai-meeting-session", {origin:"https://app.cal.com"});
+                        Cal.ns["ai-meeting-session"]("inline", {
+                            elementOrSelector:"#my-cal-inline-ai-meeting-session",
+                            config: {
+                                "layout":"month_view",
+                                "theme":"dark",
+                                "cssVars": {
+                                    "cal-brand": "#1a1a1a",
+                                    "cal-primary": "#00C2FF",
+                                    "cal-text": "#F2F2F2",
+                                    "cal-text-emphasis": "#00C2FF",
+                                    "cal-border-emphasis": "#00C2FF",
+                                    "cal-background": "#0A0F1C",
+                                    "cal-border": "rgba(0, 194, 255, 0.3)",
+                                    "cal-border-subtle": "rgba(0, 194, 255, 0.1)",
+                                    "cal-bg-subtle": "rgba(0,0,0,0.2)"
+                                }
+                            },
+                            calLink: "raylin.ai/ai-meeting-session",
+                        });
+                        Cal.ns["ai-meeting-session"]("ui", {"theme":"dark","hideEventTypeDetails":false,"layout":"month_view"});
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            if (elementsToObserve.length > 0) {
+                elementsToObserve.forEach(el => observer.observe(el));
+            }
+            
+            // Manually observe the booking section
+            const bookingSection = document.getElementById('book-a-call-section');
+            if (bookingSection) {
+                observer.observe(bookingSection);
+            }
+            
+            // Mouse Follow Glow - REMOVED
+            
+        });
+
+        // Simplified Preloader Fade-out Logic
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const headerLogo = document.getElementById('header-logo-placeholder').querySelector('.logo'); // Target the actual logo div
+            
+            if (preloader) {
+                // Wait a short moment before starting fade
+                setTimeout(() => { 
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden'; 
+                    // Make header logo visible immediately *after* preloader starts fading
+                    if(headerLogo) { 
+                        headerLogo.style.opacity = '1'; 
+                    }
+                     // Hide preloader completely after fade
+                    setTimeout(() => { preloader.style.display = 'none'; }, 500); // Duration matches CSS transition
+                }, 500); // 500ms delay before starting fade
+            } else {
+                 if(headerLogo) {
+                    headerLogo.style.opacity = '1'; // Ensure header logo is visible if no preloader
+                 }
+            }
+        });
+
+    </script>
+
+</body>
+</html>
